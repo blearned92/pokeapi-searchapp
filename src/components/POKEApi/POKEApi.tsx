@@ -5,6 +5,7 @@ import SideBar from "../SideBar/SideBar";
 import "./POKEApi.css";
 import styled, {keyframes} from "styled-components";
 import PokeBall from "../../images/PokeBall.png";
+import { Generation, generations } from "../../models/SearchParameters";
 
 const Wrapper = styled.div`
     height: 100vh;
@@ -26,22 +27,30 @@ const Header = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-    background-color: green;
+    background-image: url(${PokeBall});
+    background-size: cover;
     margin: 5px;
+    background-color: purple;
+    border-radius: 100%;
+    height: 40%;
+
 `;
 
 const ButtonTitle = styled.div`
-    color: white;
-    text-align: center;
-    font-weight: 700;
+    padding-top: 30%;
+    color: black;
+    display: flex;
+    justify-content: center;
+    font-weight: 900;
+    font-size: .7rem;
+    cursor: pointer;
 `;
 
 const Button = styled.div`
-    background-image: url(${PokeBall});
-    background-size: cover;
     cursor: pointer;
-    height: 80px;
-    width: 80px;
+    justify-content: center;
+    height: 100%;
+    aspect-ratio: 1 / 1;
     margin: 2px 2px;
 `;
 
@@ -67,10 +76,25 @@ const Image = styled.div`
 `;
 
 const PokeBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 120px;
     height: 200px;
     margin: 10px;
     background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+`;
+
+const PokeName = styled.h5`
+    text-align: center;
+`;
+
+const PokeImg = styled.img`
+    height: 100%;
+    width: 100%;
 `;
 
 const Rotate = keyframes`
@@ -111,7 +135,8 @@ const POKEApi = () => {
     //All pokemon will stay stored here
     const[pokemon, setPokemon] = useState<IPokemon[]>([]);
     const[loading, setLoading] = useState<boolean>(true);
-    
+    const[generation, setGeneration] = useState<Generation>(generations[0]);
+    const genButtons = [0, 1, 2, 3, 4, 5, 6, 7]
 
     //LOAD ALL POKEMON WHEN PAGE IS LOADED
     useEffect(()=>{
@@ -153,10 +178,10 @@ const POKEApi = () => {
         return (
         <Main>
             {pokemon.map((pokemon)=>{
-                if(pokemon.id<=900){
+                if(pokemon.id>=generation.min && pokemon.id<=generation.max){
                     return <PokeBox key={pokemon.name}>
-                    <p>{pokemon.name}</p>
-                    <img src={pokemon.sprites.front_default}/>
+                    <PokeName>{pokemon.name.toUpperCase()}</PokeName>
+                    <PokeImg src={pokemon.sprites.front_default}/>
                     </PokeBox>
                 }
             })} 
@@ -167,8 +192,18 @@ const POKEApi = () => {
     return (
         <Wrapper>
             <Header>
-                <div>{loading ? <LoadingBox><LoadingText>Loading...</LoadingText><LoadingLogo src={String(PokeBall)}/></LoadingBox>
-                 : <LoadingBox><LoadingText>Data is Fetched!</LoadingText></LoadingBox>}</div>
+                {loading ? <LoadingBox><LoadingText>Loading...</LoadingText><LoadingLogo src={String(PokeBall)}/></LoadingBox>
+                :   <>
+                        {genButtons.map((number)=>{
+                            return(
+                                <ButtonWrapper onClick={() => {setGeneration(generations[number])}}>
+                                <ButtonTitle>Gen {number+1}</ButtonTitle>
+                                <Button></Button>
+                                </ButtonWrapper>
+                                
+                            )
+                        })}
+                    </>}
             </Header>
             <Body>
                 <SideBar left={0}/>
