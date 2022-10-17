@@ -41,7 +41,7 @@ const SideBar = (Props:WrapperProps) =>{
     return (
         <Wrapper theme={Props.left}>
             {Array.from(Array(12),(e, i)=>{
-                return <Image src={String(PokeBall)}/>
+                return <Image src={String(PokeBall)} key={i}/>
             })}
             
         </Wrapper>

@@ -24,7 +24,7 @@ export interface IPokemon {
             url:string
         }
     }[]
-    sprites?:{
+    sprites:{
         front_default:string,
         front_shiny:string
     }
