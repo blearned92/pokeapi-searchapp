@@ -1,16 +1,34 @@
 {
   "files": {
-    "main.css": "/pokeapi-searchapp/static/css/main.073c9b0a.css",
-    "main.js": "/pokeapi-searchapp/static/js/main.0e3d7b0a.js",
+    "main.css": "/pokeapi-searchapp/static/css/main.a63ae8d6.css",
+    "main.js": "/pokeapi-searchapp/static/js/main.eeb982f8.js",
     "static/js/787.1c70a516.chunk.js": "/pokeapi-searchapp/static/js/787.1c70a516.chunk.js",
-    "static/media/logo.svg": "/pokeapi-searchapp/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "static/media/fire.png": "/pokeapi-searchapp/static/media/fire.eb56bc37226b047a3254.png",
+    "static/media/electric.png": "/pokeapi-searchapp/static/media/electric.137b265f630714dd79e2.png",
+    "static/media/normal.png": "/pokeapi-searchapp/static/media/normal.d84cd23c952741e8e9a6.png",
+    "static/media/ice.png": "/pokeapi-searchapp/static/media/ice.c75ad8841a339c96479a.png",
+    "static/media/water.png": "/pokeapi-searchapp/static/media/water.1aa3759f78db88f650a6.png",
+    "static/media/bug.png": "/pokeapi-searchapp/static/media/bug.df773541de79ff9e6c41.png",
+    "static/media/grass.png": "/pokeapi-searchapp/static/media/grass.ec1aad8a1fe7610ab576.png",
+    "static/media/poison.png": "/pokeapi-searchapp/static/media/poison.e8f5f1da756568f9383a.png",
+    "static/media/flying.png": "/pokeapi-searchapp/static/media/flying.c1b38bbb58fb03d76238.png",
+    "static/media/dark.png": "/pokeapi-searchapp/static/media/dark.aa1022b0241841f7d783.png",
+    "static/media/ghost.png": "/pokeapi-searchapp/static/media/ghost.ef75e7f67dd827682454.png",
+    "static/media/psychic.png": "/pokeapi-searchapp/static/media/psychic.e3ab2bde7d9c6a029674.png",
+    "static/media/dragon.png": "/pokeapi-searchapp/static/media/dragon.05e046b610d92e97b19e.png",
+    "static/media/fighting.png": "/pokeapi-searchapp/static/media/fighting.d8cc0bc57389bd4b3689.png",
+    "static/media/ground.png": "/pokeapi-searchapp/static/media/ground.6ec4ae4c7c3186adf573.png",
+    "static/media/rock.png": "/pokeapi-searchapp/static/media/rock.61b22d06e80566115b25.png",
+    "static/media/fairy.png": "/pokeapi-searchapp/static/media/fairy.3015d46d7bfc7bb41570.png",
+    "static/media/steel.png": "/pokeapi-searchapp/static/media/steel.d2aefe0ddf1d3d790e15.png",
+    "static/media/PokeBall.png": "/pokeapi-searchapp/static/media/PokeBall.6e16fc30642a1b356b59.png",
     "index.html": "/pokeapi-searchapp/index.html",
-    "main.073c9b0a.css.map": "/pokeapi-searchapp/static/css/main.073c9b0a.css.map",
-    "main.0e3d7b0a.js.map": "/pokeapi-searchapp/static/js/main.0e3d7b0a.js.map",
+    "main.a63ae8d6.css.map": "/pokeapi-searchapp/static/css/main.a63ae8d6.css.map",
+    "main.eeb982f8.js.map": "/pokeapi-searchapp/static/js/main.eeb982f8.js.map",
     "787.1c70a516.chunk.js.map": "/pokeapi-searchapp/static/js/787.1c70a516.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.0e3d7b0a.js"
+    "static/css/main.a63ae8d6.css",
+    "static/js/main.eeb982f8.js"
   ]
 }
