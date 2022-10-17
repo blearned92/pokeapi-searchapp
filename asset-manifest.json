@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/pokeapi-searchapp/static/css/main.a63ae8d6.css",
-    "main.js": "/pokeapi-searchapp/static/js/main.0fc81bad.js",
+    "main.js": "/pokeapi-searchapp/static/js/main.2d6d278b.js",
     "static/js/787.1c70a516.chunk.js": "/pokeapi-searchapp/static/js/787.1c70a516.chunk.js",
     "static/media/fire.png": "/pokeapi-searchapp/static/media/fire.a766bfede2c4242ab596.png",
     "static/media/electric.png": "/pokeapi-searchapp/static/media/electric.396bc19362f814d066e9.png",
@@ -23,11 +23,11 @@
     "static/media/PokeBall.png": "/pokeapi-searchapp/static/media/PokeBall.6e16fc30642a1b356b59.png",
     "index.html": "/pokeapi-searchapp/index.html",
     "main.a63ae8d6.css.map": "/pokeapi-searchapp/static/css/main.a63ae8d6.css.map",
-    "main.0fc81bad.js.map": "/pokeapi-searchapp/static/js/main.0fc81bad.js.map",
+    "main.2d6d278b.js.map": "/pokeapi-searchapp/static/js/main.2d6d278b.js.map",
     "787.1c70a516.chunk.js.map": "/pokeapi-searchapp/static/js/787.1c70a516.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.a63ae8d6.css",
-    "static/js/main.0fc81bad.js"
+    "static/js/main.2d6d278b.js"
   ]
 }
