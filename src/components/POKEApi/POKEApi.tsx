@@ -4,8 +4,8 @@ import {IPokemon, IPokeURL, IPokeURLArray} from "../../models/IPokemon";
 import SideBar from "../SideBar/SideBar";
 import "./POKEApi.css";
 import styled, {keyframes} from "styled-components";
-import PokeBall from "../../images/PokeBall.png";
 import { Generation, generations } from "../../models/SearchParameters";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Wrapper = styled.div`
     height: 100vh;
@@ -24,34 +24,6 @@ const Header = styled.div`
     top: 0;
     overflow: hidden;
     z-index: 100;
-`;
-
-const ButtonWrapper = styled.div`
-    background-image: url(${PokeBall});
-    background-size: cover;
-    margin: 5px;
-    background-color: purple;
-    border-radius: 100%;
-    height: 40%;
-
-`;
-
-const ButtonTitle = styled.div`
-    padding-top: 30%;
-    color: black;
-    display: flex;
-    justify-content: center;
-    font-weight: 900;
-    font-size: .7rem;
-    cursor: pointer;
-`;
-
-const Button = styled.div`
-    cursor: pointer;
-    justify-content: center;
-    height: 100%;
-    aspect-ratio: 1 / 1;
-    margin: 2px 2px;
 `;
 
 const Body = styled.div`
@@ -97,46 +69,16 @@ const PokeImg = styled.img`
     width: 100%;
 `;
 
-const Rotate = keyframes`
-    from{
-        transoform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg)
-    }
-`;
-
-const Loading = keyframes`
-    from{width: 0;}
-    to{width: 4em;}
-`;
-
-const LoadingBox = styled.div`
-    text-align: center;
-    height: 100%;
-`;
-
-const LoadingText = styled.h2`
-    color: white;
-    // animation: ${Loading} 1s steps(44) 1s 1 normal both;
-    // &:after{
-    //     content: "...";
-    // }
-`;
-
-const LoadingLogo = styled.img`
-    height: 50px;
-    width: 50px;
-    animation: ${Rotate} infinite .3s linear;
-`;
-
 const POKEApi = () => {
 
     //All pokemon will stay stored here
     const[pokemon, setPokemon] = useState<IPokemon[]>([]);
     const[loading, setLoading] = useState<boolean>(true);
+    const[searchName, setSearchName] = useState<String>("");
+    const[type1, setType1] = useState<String>("");
+    const[type2, setType2] = useState<String>("");
     const[generation, setGeneration] = useState<Generation>(generations[0]);
-    const genButtons = [0, 1, 2, 3, 4, 5, 6, 7]
+    const genButtons = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 
     //LOAD ALL POKEMON WHEN PAGE IS LOADED
     useEffect(()=>{
@@ -174,11 +116,65 @@ const POKEApi = () => {
         return firstPokemon.data;
     } 
 
+    const checkGeneration = (pokemon:IPokemon) => {
+        if(!(pokemon.id>=generation.min && pokemon.id<=generation.max)){
+            return false;
+        }
+        return true;
+    }
+
+    const containsType1 = (pokemon:IPokemon) => {
+        if(pokemon.types[0].type.name == type1){
+            return true;
+        }
+        if(pokemon.types.length === 2) {
+            if(pokemon.types[1].type.name == type1){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const containsType2 = (pokemon:IPokemon) => {
+        if(pokemon.types[0].type.name == type2){
+            return true;
+        }
+        if(pokemon.types.length === 2) {
+            if(pokemon.types[1].type.name == type2){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    const constainsName = (pokemon:IPokemon) => {
+        if(pokemon.name.includes(searchName.toString())){
+            return true;
+        }
+        return false;
+    }
+
+    const filterPokemon = (pokemon:IPokemon) => {
+        if(!checkGeneration(pokemon)){
+            return false;
+        }
+        if(!containsType1(pokemon) && type1 !== ""){
+            return false;
+        }
+        if(!containsType2(pokemon) && type2 !== ""){
+            return false;
+        }
+        if(!constainsName(pokemon)){
+            return false;
+        }
+        return true;
+    }
+
     const renderPokemon = () => {
         return (
         <Main>
             {pokemon.map((pokemon)=>{
-                if(pokemon.id>=generation.min && pokemon.id<=generation.max){
+                if(filterPokemon(pokemon)){
                     return <PokeBox key={pokemon.name}>
                     <PokeName>{pokemon.name.toUpperCase()}</PokeName>
                     <PokeImg src={pokemon.sprites.front_default}/>
@@ -191,20 +187,11 @@ const POKEApi = () => {
 
     return (
         <Wrapper>
-            <Header>
-                {loading ? <LoadingBox><LoadingText>Loading...</LoadingText><LoadingLogo src={String(PokeBall)}/></LoadingBox>
-                :   <>
-                        {genButtons.map((number)=>{
-                            return(
-                                <ButtonWrapper onClick={() => {setGeneration(generations[number])}}>
-                                <ButtonTitle>Gen {number+1}</ButtonTitle>
-                                <Button></Button>
-                                </ButtonWrapper>
-                                
-                            )
-                        })}
-                    </>}
-            </Header>
+            <SearchBar loading={loading} 
+                genButtons={genButtons} 
+                setGeneration={setGeneration}
+                searchName={searchName}
+                setSearchName={setSearchName}/>
             <Body>
                 <SideBar left={0}/>
                 <Main>
