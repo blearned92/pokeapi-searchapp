@@ -1,35 +1,24 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import {IPokemon, IPokeURL, IPokeURLArray} from "../../models/IPokemon";
-import SideBar from "../SideBar/SideBar";
+import {IPokemon, IPokeURLArray} from "../../models/IPokemon";
+// import SideBar from "../SideBar/SideBar";
 import "./POKEApi.css";
-import styled, {keyframes} from "styled-components";
+import styled from "styled-components";
 import { Generation, generations } from "../../models/SearchParameters";
 import SearchBar from "../SearchBar/SearchBar";
+import MiniCard from "../PokeCard/MiniCard";
+import PokeDetailsModal from "../PokeCard/PokeDetailsModal";
+import PokeTable from "../PokeTable/PokeTable";
 
 const Wrapper = styled.div`
-    height: 100vh;
+    height: 100%;
     width: 100%;
-`;
-
-const Header = styled.div`
-    height: 20%;
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    background-color: black;
-    position: fixed;
-    top: 0;
-    overflow: hidden;
-    z-index: 100;
 `;
 
 const Body = styled.div`
     margin-top: 20vh;
     margin-left: 10%;
-    height: 80vh;
+    // height: 80vh;
     width: 80%;
     display: flex;
 `;
@@ -42,31 +31,9 @@ const Main = styled.div`
     justify-content: space-around;
 `;
 
-const Image = styled.div`
-    width: 50px;
-    height: 50px;
-`;
-
-const PokeBox = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 120px;
-    height: 200px;
-    margin: 10px;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 10px;
-`;
-
-const PokeName = styled.h5`
-    text-align: center;
-`;
-
-const PokeImg = styled.img`
-    height: 100%;
-    width: 100%;
+const Test = styled.h1`
+    color: white;
+    background-color: black;
 `;
 
 const POKEApi = () => {
@@ -74,11 +41,13 @@ const POKEApi = () => {
     //All pokemon will stay stored here
     const[pokemon, setPokemon] = useState<IPokemon[]>([]);
     const[loading, setLoading] = useState<boolean>(true);
+    const[openModal, setOpenModal] = useState<boolean>(false);
     const[searchName, setSearchName] = useState<String>("");
     const[type1, setType1] = useState<String>("");
     const[type2, setType2] = useState<String>("");
     const[generation, setGeneration] = useState<Generation>(generations[0]);
     const genButtons = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    const [currentPokemon, setCurrentPokemon] = useState<IPokemon>({} as IPokemon);
 
     //LOAD ALL POKEMON WHEN PAGE IS LOADED
     useEffect(()=>{
@@ -100,7 +69,7 @@ const POKEApi = () => {
         if(pokemon.length === 0){
             getPoke(50, 0);   
             console.log(pokemon.length)
-        } else if (pokemon.length < 1000){
+        } else if (pokemon.length < 1154){
             getPoke(50, pokemon.length);
             console.log(pokemon.length)
         }       
@@ -124,11 +93,11 @@ const POKEApi = () => {
     }
 
     const containsType1 = (pokemon:IPokemon) => {
-        if(pokemon.types[0].type.name == type1){
+        if(pokemon.types[0].type.name === type1){
             return true;
         }
         if(pokemon.types.length === 2) {
-            if(pokemon.types[1].type.name == type1){
+            if(pokemon.types[1].type.name === type1){
                 return true;
             }
         }
@@ -136,11 +105,11 @@ const POKEApi = () => {
     }
 
     const containsType2 = (pokemon:IPokemon) => {
-        if(pokemon.types[0].type.name == type2){
+        if(pokemon.types[0].type.name === type2){
             return true;
         }
         if(pokemon.types.length === 2) {
-            if(pokemon.types[1].type.name == type2){
+            if(pokemon.types[1].type.name === type2){
                 return true;
             }
         }
@@ -173,14 +142,11 @@ const POKEApi = () => {
     const renderPokemon = () => {
         return (
         <Main>
-            {pokemon.map((pokemon)=>{
-                if(filterPokemon(pokemon)){
-                    return <PokeBox key={pokemon.name}>
-                    <PokeName>{pokemon.name.toUpperCase()}</PokeName>
-                    <PokeImg src={pokemon.sprites.front_default}/>
-                    </PokeBox>
-                }
-            })} 
+            <PokeTable 
+                pokemon={pokemon} 
+                filerPokemon={filterPokemon} 
+                setCurrentPokemon={setCurrentPokemon} 
+                setOpenModal={setOpenModal}/>
         </Main>
         )
     }
@@ -189,73 +155,32 @@ const POKEApi = () => {
         <Wrapper>
             <SearchBar loading={loading} 
                 genButtons={genButtons} 
+                generation={generation}
                 setGeneration={setGeneration}
                 searchName={searchName}
-                setSearchName={setSearchName}/>
+                setSearchName={setSearchName}
+                type1={type1}
+                setType1={setType1}
+                type2={type2}
+                setType2={setType2}
+                setOpenModal={setOpenModal}/>
             <Body>
-                <SideBar left={0}/>
+                {/* <SideBar left={0}/> */}
                 <Main>
-                    {renderPokemon()}
+                    {
+                    openModal ? 
+                    <PokeDetailsModal pokemon={currentPokemon} setOpenModal={setOpenModal}/> :
+                    <PokeTable 
+                        pokemon={pokemon} 
+                        filerPokemon={filterPokemon} 
+                        setCurrentPokemon={setCurrentPokemon} 
+                        setOpenModal={setOpenModal}/>
+                    }
                 </Main>
-                <SideBar left={1}/>
+                {/* <SideBar left={1}/> */}
             </Body>
         </Wrapper>
     )
 }
 
 export default POKEApi;
-
-
-
-
-
-
-                // <div className="Wrapper">
-                //     <div className="list-grid">
-                //         {
-                //             pokemonArray.map((pokemon)=>{
-                //                 return <div className={"container"} >
-                //                     <div className={"background " + pokemon.types[0].type.name}>
-                //                         <div className="head">
-                //                             <table>
-                //                                 <tr>
-                //                                     <td className="name">{pokemon.name.toUpperCase()}</td>
-                //                                     <td className="hp">{pokemon.stats[0].stat.name.toUpperCase()}: {pokemon.stats[0].base_stat}</td>
-                //                                     <td className="logo"><img src={require("../../images/logos/"+ pokemon.types[0].type.name +".png")}/></td>
-                //                                 </tr>
-                //                             </table>
-                //                         </div>
-                //                         <div className="body">
-                //                             <img src={pokemon.sprites?.front_default} className="img"/>
-                //                         </div>
-                //                         <div className="info">
-                //                             <table>
-                //                                 <tr>
-                //                                     <td className="stat">{pokemon.stats[1].stat.name.toUpperCase()}</td>
-                //                                     <td className="value">{pokemon.stats[1].base_stat}</td>
-                //                                 </tr>
-                //                                 <tr>
-                //                                     <td className="stat">{pokemon.stats[2].stat.name.toUpperCase()}</td>
-                //                                     <td className="value">{pokemon.stats[2].base_stat}</td>
-                //                                 </tr>
-                //                                 <tr>
-                //                                     <td className="stat">{pokemon.stats[3].stat.name.toUpperCase()}</td>
-                //                                     <td className="value">{pokemon.stats[3].base_stat}</td>
-                //                                 </tr>
-                //                                 <tr>
-                //                                     <td className="stat">{pokemon.stats[4].stat.name.toUpperCase()}</td>
-                //                                     <td className="value">{pokemon.stats[4].base_stat}</td>
-                //                                 </tr>
-                //                                 <tr>
-                //                                     <td className="stat">{pokemon.stats[5].stat.name.toUpperCase()}</td>
-                //                                     <td className="value">{pokemon.stats[5].base_stat}</td>
-                //                                 </tr>
-                //                             </table>
-                //                         </div>
-                //                         <div className="footer">Dex# {pokemon.id}</div>
-                //                     </div>
-                //                 </div>
-                //             })
-                //         }
-                //     </div>
-                // </div> 

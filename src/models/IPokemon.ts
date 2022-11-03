@@ -10,22 +10,121 @@ export interface IPokeURLArray{
 }
 
 export interface IPokemon {
+    abilities: {
+        ability:{
+            name:String,
+            url:String,
+            is_hidden:boolean,
+            slot:number
+        }
+    }[],
+    base_experience:number,
+    forms:{
+        name:String,
+        url:String
+    }[],
+    game_indices:{
+        game_index:number,
+        version:{
+            name:String,
+            url:String
+        }
+    }[],
+    height:number,
     id:number,
+    is_default:boolean,
+    location_area_encounters:String,
+    moves:{
+        move:{
+            name:String,
+            url:String
+        },
+        version_group_details:{
+            level_learned_at:number,
+            move_learn_method:{
+                name:String,
+                url:String
+            },
+            version_group:{
+                name:String,
+                url:String
+            }
+        }[]
+    }[],
     name:string,
+    species:{
+        name:String,
+        url:String
+    },
     stats:{
         base_stat:number,
         stat:{
             name:string
         }
-    }[]
+    }[],
     types:{
         type:{
             name:string,
             url:string
         }
-    }[]
+    }[],
     sprites:{
+        back_default:String,
+        back_female:String,
+        back_shiny:String,
+        back_shiny_famale:String,
         front_default:string,
-        front_shiny:string
+        front_female:String,
+        front_shiny:string,
+        front_shiny_female:String
+        other:{
+            home:{
+                front_default:string,
+                front_female:String,
+                front_shiny:string,
+                front_shiny_female:String
+            },
+            "official-artwork":{
+                front_default:string,
+            }
+        },
+        versions:{
+            "generation-i":{
+                "red-blue":{
+                    back_default:String,
+                    back_gray:String,
+                    back_transparent:String,
+                    front_default:String,
+                    front_gray:String,
+                    front_transparent:String
+                },
+                yellow:{
+                    back_default:String,
+                    back_gray:String,
+                    back_transparent:String,
+                    front_default:String,
+                    front_gray:String,
+                    front_transparent:String
+                }
+            },
+            "generation-iii":{
+                emerald:{
+                    front_default:String,
+                    front_shiny:String
+                },
+                "firered-leafgreen":{
+                    back_default:String,
+                    back_shiny:String,
+                    front_default:String,
+                    front_shiny:String
+                },
+                "ruby-sapphire":{
+                    back_default:String,
+                    back_shiny:String,
+                    front_default:String,
+                    front_shiny:String
+                }
+            }
+        }
     }
 }

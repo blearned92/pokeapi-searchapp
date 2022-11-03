@@ -8,7 +8,7 @@ export const generations:Generation[] = [
     {
         generation: "All",
         min:1, 
-        max:1000
+        max:1154
     },
     {
         generation: "Gen 1",
